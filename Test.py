@@ -1,7 +1,7 @@
 # Calcular SSD
 import numpy as np
 import cv2
-
+#mi rama
 imagenPrincipal = np.empty(shape = (15,18), dtype = int)#declar una matriz
 mascara = np.empty(shape=(5,5), dtype= int )
 puntosSSD = np.empty(shape=())
