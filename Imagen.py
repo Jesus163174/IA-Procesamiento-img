@@ -14,9 +14,9 @@ class Imagen:
         self.loop() # will wait finish the main
 
     def eventMouseClick(self):
-        self.cuadro = cv2.selectROI(self.img)
-        self.validated = self.validateMask()
-        self.mCrop = self.createMask(self.cuadro[0],self.validated[0],self.cuadro[1],self.validated[1])
+        self.cuadro = cv2.selectROI(self.img) #seleccionar el pedezo de la imagen
+        self.validated = self.validateMask() #validar que la mascara sea inpar para que exista un centor
+        self.mCrop = self.createMask(self.cuadro[0],self.validated[0],self.cuadro[1],self.validated[1]) 
         Displacement(self.mCrop,self.cuadro)
 
     def validateMask(self): #change method, una tupla no puede ser modificada
@@ -37,9 +37,9 @@ class Imagen:
 class Displacement:
 
     def __init__(self,mask,cuadrado):
-        self.mask = mask
+        self.mask = mask #mascara imagen ya cortada
         self.cuadrado = cuadrado
-        self.img = cv2.imread("logo2.jpg",0)
+        self.img = cv2.imread("logo2.jpg",0) # hacerlo dentrod extraer fondo para iterar imagenes
         cv2.imshow("desplazada ",self.img)
         self.initSSD()
     
@@ -63,7 +63,12 @@ class Displacement:
         
         cv2.imwrite("resultado.jpg",dst)
         cv2.imshow("Resultado",dst)
-
+    
+    def extraerFondo(self):
+        num_imagenes = 5
+        for i in range(num_imagenes):
+            imagen = 'im00000'+(i+1)+'.jpg'
+            print(imagen)
 
        
         
