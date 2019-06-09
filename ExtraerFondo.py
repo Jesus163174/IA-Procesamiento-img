@@ -46,5 +46,7 @@ class ExtraerFondo:
         #leer la imagen i
         imageN = cv2.imread(namei,0)
         self.showImage("ImagenN",imageN)
+
+        
         return ""
          
