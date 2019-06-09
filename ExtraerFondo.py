@@ -40,7 +40,11 @@ class ExtraerFondo:
             namei = "im00000"+repr(i+2)+".jpg"
             print(namei)
             alinear = self.ssd(namei)
+            self.loop()
     
     def ssd(self,namei):
+        #leer la imagen i
+        imageN = cv2.imread(namei,0)
+        self.showImage("ImagenN",imageN)
         return ""
          
