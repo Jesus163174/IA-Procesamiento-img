@@ -35,18 +35,38 @@ class ExtraerFondo:
         cv2.waitKey(0)
 
     def initExtraerFondo(self):
-        numero_imagenes = 5
+        numero_imagenes = 8
+        fondo = self.imagen_original
+        alpha = 0.1
         for i in range(numero_imagenes):
             namei = "im00000"+repr(i+2)+".jpg"
-            print(namei)
             alinear = self.ssd(namei)
-            self.loop()
+            fondo = (1-alpha)*fondo+(alpha*alinear)
+            #self.loop()
+        cv2.imwrite("resultado.jpg",fondo)
+        img = cv2.imread("resultado.jpg")
+        cv2.imshow("Resultado",img)
+
     
     def ssd(self,namei):
         #leer la imagen i
         imageN = cv2.imread(namei,0)
-        self.showImage("ImagenN",imageN)
+        #self.showImage("ImagenN",imageN)
+        rest = 99**99
+        pos = []
+        for y in range(imageN.shape[0]-self.mask.shape[0]):
+            for x in range(imageN.shape[1]-self.mask.shape[1]):
+                sum = 0
+                tempCrop = imageN[int(y):int(y+self.mask.shape[0]),int(x):int(x+self.mask.shape[1])]
+                sum = np.sum((tempCrop-self.mask)**2)
+                if sum < rest :
+                    rest = sum
+                    pos = x,y
+        desx =  self.cut[0] - pos[0]
+        desy =  self.cut[1] - pos[1] 
 
-        
-        return ""
+        m = np.float32([[1,0,desx],[0,1,desy]])
+        dst = cv2.warpAffine(imageN,m,(imageN.shape[1],imageN.shape[0]))
+
+        return dst
          
